@@ -35,4 +35,14 @@ trait UuidAsKey
     {
         return 'id';
     }
+
+    public function getIncrementing()
+    {
+        return false;
+    }
+
+    public function getKeyType()
+    {
+        return 'string';
+    }
 }

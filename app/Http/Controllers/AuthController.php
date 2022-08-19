@@ -23,9 +23,12 @@ class AuthController extends Controller
 
         if (!User::where('email', $request->email)->exists()) {
             return response()->json([
-                'status' => 'error',
+                'status' => [
+                    'result' => "error",
+                    "message" => "Email not found!",
+                ],
                 'message' => 'Could not find that email!',
-            ]);
+            ], 404);
         }
 
         $credentials = $request->only('email', 'password');
@@ -33,12 +36,15 @@ class AuthController extends Controller
         $token = Auth::attempt($credentials);
         if (!$token) {
             return response()->json([
-                'status' => 'error',
-                'message' => 'Unauthorized',
-            ]);
+                'status' => [
+                    "result" => "error",
+                    "message" => "Invalid credentials!",
+                ]
+            ], 401);
         }
 
         $user = Auth::user();
+
         return response()->json([
             'status' => [
                 "result" => "success",
@@ -107,7 +113,10 @@ class AuthController extends Controller
     public function refresh()
     {
         return response()->json([
-            'status' => 'success',
+            "status" => [
+                "result" => "success",
+                "message" => "Successfully refreshed token!",
+            ],
             'user' => Auth::user(),
             'authorization' => [
                 'token' => Auth::refresh(),
@@ -116,7 +125,8 @@ class AuthController extends Controller
         ]);
     }
 
-    public function update(Request $request) {
+    public function update(Request $request)
+    {
         $request->validate([
             'name' => 'string|max:255',
             'username' => 'string|max:255',
@@ -136,9 +146,10 @@ class AuthController extends Controller
             'user' => $user,
         ]);
     }
-    
-    public function resetPassword(Request $request) {
-        $user = User::where("email", $request->email)->first();
+
+    public function resetPassword(Request $request)
+    {
+        $user = Auth::user();
 
         if (Hash::check($request->password, $user->password)) {
             return response()->json([
