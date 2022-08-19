@@ -34,14 +34,14 @@ class CardController extends Controller
         $card = Card::find($id);
 
         $card->comments = $card->comments()->get();
-        $card->checklists = $card->checklists()->get()->map(fn($checklist) => [
+        $card->checklists = $card->checklists()->get()->map(fn ($checklist) => [
             "id" => $checklist->id,
             "name" => $checklist->name,
             "description" => $checklist->description,
             "items" => $checklist->items()->get(),
-        ]);
-        $card->tags = $card->tags()->get();
-        $card->notepads = $card->notepads()->get();
+        ]) ?? [];
+        $card->tags = $card->tags()->get() ?? [];
+        $card->notepads = $card->notepads()->get() ?? [];
 
         return $card;
     }
@@ -54,13 +54,32 @@ class CardController extends Controller
 
     public function destroy($id)
     {
-        Card::destroy($id);
+        // deleting a card can be at the start, middle or end of a folder
+        $card = Card::find($id);
+        $folderCount = Card::where('folder_id', $card->folder_id)->count();
+
+        if ($card->folder_index === 0) {
+            $card->delete();
+            Card::where("folder_id", $card->folder_id)
+                ->decrement("folder_index");
+        } else if ($card->folder_index > 0 && $card->folder_index < $folderCount) {
+            $card->delete();
+            Card::where("folder_id", $card->folder_id)
+                ->where("folder_index", ">", $card->folder_index)
+                ->decrement("folder_index");
+        }
+        else {
+            $card->delete();
+        }
     }
 
     public function getFolderCards(string $id)
     {
-        // order cards by folder index
-        return Card::where("folder_id", $id)->orderBy("folder_index", "asc")->get();
+        $cards = Card::where("folder_id", $id)
+            ->orderBy("folder_index", "asc")
+            ->get()
+            ->map(fn ($card) => $this->show($card->id));
+        return $cards;
     }
 
     public function move(Request $request, string $id)
@@ -72,15 +91,14 @@ class CardController extends Controller
         */
         $card = Card::find($id);
         $folderLength = Card::where('folder_id', $request->folderId)->count();
-  
-        $card->folder_id = $request->folderId;
 
         // if the folder has no items, set the card index to be the first item
         if ($folderLength <= 0) {
-            $card->folder_index = 0;  
+            $card->folder_index = 0;
         }
         // if the card is start of the list, increment all cards' indexes after
         else if ($request->index == 0) {
+            $card->folder_index = 0;
             Card::where("folder_id", $request->folderId)->increment("folder_index");
         }
         // if the drop index is larger than the target folder's length, limit the index to it
@@ -95,6 +113,8 @@ class CardController extends Controller
             // then we save the index
             $card->folder_index = $request->index;
         }
+
+        $card->folder_id = $request->folderId;
 
         $card->save();
     }
