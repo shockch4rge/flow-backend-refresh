@@ -40,7 +40,21 @@ class FolderController extends Controller
 
     public function destroy($id)
     {
-        Folder::destroy($id);
+        $folder = Folder::find($id);
+        $boardCount = Folder::where('board_id', $folder->board_id)->count();
+
+        if ($folder->board_index == 0) {
+            $folder->delete();
+            Folder::where("board_id", $folder->board_id)
+                ->decrement("board_index");
+        } else if ($folder->board_index > 0 && $folder->board_index < $boardCount) {
+            $folder->delete();
+            Folder::where("board_id", $folder->board_id)
+                ->where("board_index", ">", $folder->board_index)
+                ->decrement("board_index");
+        } else {
+            $folder->delete();
+        }
     }
 
     public function getBoardFolders(string $id)
@@ -48,7 +62,7 @@ class FolderController extends Controller
         return Folder::where("board_id", $id)->orderBy("board_index", "asc")->get();
     }
 
-    public function move(Request $request) 
+    public function move(Request $request)
     {
         $folder = Folder::find($request->folderId);
         $boardLength = Folder::where('board_id', $request->boardId)->count();
