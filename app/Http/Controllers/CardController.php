@@ -67,8 +67,7 @@ class CardController extends Controller
             Card::where("folder_id", $card->folder_id)
                 ->where("folder_index", ">", $card->folder_index)
                 ->decrement("folder_index");
-        }
-        else {
+        } else {
             $card->delete();
         }
     }
