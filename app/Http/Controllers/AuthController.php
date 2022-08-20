@@ -127,16 +127,8 @@ class AuthController extends Controller
 
     public function update(Request $request)
     {
-        $request->validate([
-            'name' => 'string|max:255',
-            'username' => 'string|max:255',
-            'email' => 'string|email|max:255|unique:users',
-        ]);
-
         $user = Auth::user();
-        $user->name = $request->name ?? $user->name;
-        $user->username = $request->username ?? $user->username;
-        $user->email = $request->email ?? $user->email;
+        $user->update($request->all());
 
         $user->save();
 

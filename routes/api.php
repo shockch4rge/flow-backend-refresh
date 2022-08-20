@@ -22,7 +22,7 @@ Route::group([
     Route::post('logout', [AuthController::class, 'logout']);
     Route::get('refresh', [AuthController::class, 'refresh']);
     Route::delete('destroy', [AuthController::class, 'destroy']);
-    Route::put('update', [AuthController::class, 'update']);
+    Route::put('update/{id}', [AuthController::class, 'update']);
     Route::get('me', [AuthController::class, 'me']);
     Route::put('password', [AuthController::class, 'resetPassword']);
 });
