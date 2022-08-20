@@ -3,9 +3,12 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BoardController;
 use App\Http\Controllers\CardController;
+use App\Http\Controllers\FolderController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\NotepadController;
+use App\Http\Controllers\TagController;
 use App\Http\Controllers\ChecklistController;
 use App\Http\Controllers\ChecklistItemController;
-use App\Http\Controllers\FolderController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -31,6 +34,9 @@ Route::apiResources([
     "cards" => CardController::class,
     "checklists" => ChecklistController::class,
     "checklist_items" => ChecklistItemController::class,
+    "notepads" => NotepadController::class,
+    "tags" => TagController::class,
+    "comments" => CommentController::class,
 ]);
 
 Route::get("users/{id}/boards", [BoardController::class, "getUserBoards"]);

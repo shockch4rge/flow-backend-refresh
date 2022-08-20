@@ -3,11 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Components\Checklist;
-use App\Models\Components\ChecklistItem;
 use Illuminate\Http\Request;
 
 class ChecklistController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
+
     public function index()
     {
         return Checklist::all();
@@ -40,6 +44,4 @@ class ChecklistController extends Controller
     {
         Checklist::destroy($id);
     }
-
-    
 }

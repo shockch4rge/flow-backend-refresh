@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class ChecklistItemController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
+
     public function index()
     {
         return ChecklistItem::all();

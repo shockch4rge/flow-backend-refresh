@@ -21,7 +21,7 @@ class BoardController extends Controller
     {
         $board = new Board();
 
-        $board->name = trim($request->name);
+        $board->name = $request->name;
         $board->description = "No description";
         $board->author_id = $request->authorId;
 
@@ -38,7 +38,6 @@ class BoardController extends Controller
     public function update(Request $request, string $id)
     {
         Board::where("id", $id)->update($request->all());
-        return Board::find($id);
     }
 
     public function destroy(string $id)
