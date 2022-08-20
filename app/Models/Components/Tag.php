@@ -2,6 +2,7 @@
 
 namespace App\Models\Components;
 
+use App\Models\Board;
 use App\Models\Traits\UuidAsKey;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

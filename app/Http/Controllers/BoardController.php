@@ -21,21 +21,18 @@ class BoardController extends Controller
     {
         $board = new Board();
 
-        $board->name = $request->name;
+        $board->name = trim($request->name);
         $board->description = "No description";
         $board->author_id = $request->authorId;
 
         $board->save();
-
-        return response()->json([
-            "status" => "success",
-            "board" => $board,
-        ]);
     }
 
     public function show(string $id)
     {
-        return Board::find($id);
+        $board = Board::find($id);
+        $board->tags = $board->tags()->get() ?? [];
+        return $board;
     }
 
     public function update(Request $request, string $id)
@@ -47,10 +44,14 @@ class BoardController extends Controller
     public function destroy(string $id)
     {
         Board::destroy($id);
-        return response();
     }
 
-    public function getUserBoards(string $id) {
-        return Board::where("author_id", $id)->orderBy("created_at", "asc")->get();
+    public function getUserBoards(string $id)
+    {
+        $boards = Board::where("author_id", $id)
+            ->orderBy("created_at", "asc")
+            ->get()
+            ->map(fn ($board) => $this->show($board->id));
+        return $boards;
     }
 }
