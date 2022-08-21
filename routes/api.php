@@ -44,3 +44,4 @@ Route::get("boards/{id}/folders", [FolderController::class, "getBoardFolders"]);
 Route::get("folders/{id}/cards", [CardController::class, "getFolderCards"]);
 Route::put("cards/{id}/move", [CardController::class, "move"]);
 Route::put("checklist_items/{id}/toggle", [ChecklistItemController::class, "toggle"]);
+Route::post("cards/{id}/tags", [CardController::class, "assignTags"]);
