@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Components\ChecklistItem;
+use App\Models\ChecklistItem;
 use Illuminate\Http\Request;
 
 class ChecklistItemController extends Controller

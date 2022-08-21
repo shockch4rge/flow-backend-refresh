@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Models\Components;
+namespace App\Models;
 
-use App\Models\Board;
+
 use App\Models\Traits\UuidAsKey;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

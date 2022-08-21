@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Components\Checklist;
+use App\Models\Checklist;
 use Illuminate\Http\Request;
 
 class ChecklistController extends Controller

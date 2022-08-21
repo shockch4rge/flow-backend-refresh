@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Components\Notepad;
+use App\Models\Notepad;
 use Illuminate\Http\Request;
 
 class NotepadController extends Controller

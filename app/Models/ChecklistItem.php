@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Models\Components;
+namespace App\Models;
 
-use App\Models\Card;
+
 use App\Models\Traits\UuidAsKey;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class ChecklistItem extends Model {
+class ChecklistItem extends Model
+{
     use HasFactory, UuidAsKey;
 
     protected $primaryKey = "id";

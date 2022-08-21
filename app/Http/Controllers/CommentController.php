@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use Illuminate\Http\Request;
-use App\Models\Components\Comment;
 
 class CommentController extends Controller
 {
@@ -44,9 +44,5 @@ class CommentController extends Controller
     public function destroy($id)
     {
         Comment::destroy($id);
-    }
-
-    public function getCardComments(string $id) {
-        return Comment::where("card_id", $id)->get();
     }
 }
