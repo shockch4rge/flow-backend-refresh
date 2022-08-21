@@ -16,10 +16,11 @@ class TagController extends Controller
     {
         $tag = new Tag();
         $tag->board_id = $request->boardId;
-        $tag->content = $request->content;
-        $tag->color_code = $request->colorCode;
+        $tag->name = $request->name;
 
         $tag->save();
+
+        return $tag;
     }
 
     public function show($id)
