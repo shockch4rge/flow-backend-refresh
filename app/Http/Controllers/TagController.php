@@ -39,9 +39,4 @@ class TagController extends Controller
     {
         Tag::destroy($id);
     }
-
-    public function getBoardTags(string $id)
-    {
-        return Tag::where("board_id", $id)->get();
-    }
 }
