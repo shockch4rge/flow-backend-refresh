@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\Components\Checklist;
+use App\Models\Checklist;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**

@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-use App\Models\Components\Checklist;
-use App\Models\Components\Tag;
-use App\Models\Components\Notepad;
-use App\Models\Components\Comment;
+use App\Models\Checklist;
+use App\Models\Tag;
+use App\Models\Notepad;
+use App\Models\Comment;
 use App\Models\Traits\UuidAsKey;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

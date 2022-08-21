@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Components\Tag;
+use App\Models\Tag;
 use App\Models\Traits\UuidAsKey;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

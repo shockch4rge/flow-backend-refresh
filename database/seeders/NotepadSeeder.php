@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Components\Notepad;
+use App\Models\Notepad;
 use Illuminate\Database\Seeder;
 
 class NotepadSeeder extends Seeder
