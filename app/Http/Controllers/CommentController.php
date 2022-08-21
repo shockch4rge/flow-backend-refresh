@@ -37,8 +37,6 @@ class CommentController extends Controller
         $comment = Comment::find($id);
         $comment = $comment->update($request->all());
         $comment->save();
-
-        return $comment;
     }
 
     public function destroy($id)
