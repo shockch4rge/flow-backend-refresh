@@ -16,7 +16,6 @@ class CreateTagsTable extends Migration
         Schema::create('tags', function (Blueprint $table) {
             $table->uuid("id")->primary();
             $table->string("name");
-            $table->string("color_code");
 
             $table->timestamps();
             $table->foreignUuid("board_id")->constrained("boards")->cascadeOnUpdate()->cascadeOnDelete();
