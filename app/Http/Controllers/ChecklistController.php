@@ -21,8 +21,10 @@ class ChecklistController extends Controller
     {
         $checklist = new Checklist();
         $checklist->card_id = $request->cardId;
-        $checklist->content = $request->content;
-        $checklist->items = [];
+        $checklist->name = $request->name;
+        $checklist->description = $request->description;
+
+        error_log($checklist);
         $checklist->save();
     }
 
