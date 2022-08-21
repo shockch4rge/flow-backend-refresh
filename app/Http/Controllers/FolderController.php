@@ -62,15 +62,22 @@ class FolderController extends Controller
         return Folder::where("board_id", $id)->orderBy("board_index", "asc")->get();
     }
 
-    public function move(Request $request)
+    public function move(Request $request, string $id)
     {
-        $folder = Folder::find($request->folderId);
+        $folder = Folder::find($id);
         $boardLength = Folder::where('board_id', $request->boardId)->count();
 
-        if ($request->index >= $boardLength) {
+        if ($request->index == 0) {
+            $folder->board_index = 0;
+            Folder::where("board_id", $request->boardId)
+                ->increment("board_index");
+        } else if ($request->index == $boardLength) {
             $folder->board_index = $boardLength;
         } else {
             $folder->board_index = $request->index;
+            Folder::where("board_id", $request->boardId)
+                ->where("board_index", ">", $request->index)
+                ->increment("board_index");
         }
 
         $folder->save();

@@ -42,6 +42,7 @@ Route::apiResources([
 Route::get("users/{id}/boards", [BoardController::class, "getUserBoards"]);
 Route::get("boards/{id}/folders", [FolderController::class, "getBoardFolders"]);
 Route::get("folders/{id}/cards", [CardController::class, "getFolderCards"]);
+Route::put("folders/{id}/move", [FolderController::class, "move"]);
 Route::put("cards/{id}/move", [CardController::class, "move"]);
 Route::put("checklist_items/{id}/toggle", [ChecklistItemController::class, "toggle"]);
 Route::post("cards/{id}/tags", [CardController::class, "assignTags"]);
