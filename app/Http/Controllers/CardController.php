@@ -117,4 +117,12 @@ class CardController extends Controller
 
         $card->save();
     }
+
+    public function assignTags(Request $request, string $id)
+    {
+        $card = Card::find($id);
+        $card->tags()->sync($request->tagIds);
+
+        $card->save();
+    }
 }
