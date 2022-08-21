@@ -33,7 +33,7 @@ class CardController extends Controller
     {
         $card = Card::find($id);
 
-        $card->comments = $card->comments()->get();
+        $card->comments = $card->comments()->orderBy('created_at', 'asc')->get();
         $card->checklists = $card->checklists()->get()->map(fn ($checklist) => [
             "id" => $checklist->id,
             "name" => $checklist->name,
